@@ -1,44 +1,48 @@
 package main;
+import java.io.IOException;
 import java.util.Scanner;
 
 class Main {
-	private static Scanner keyboard;
+	private static Scanner keyboard  = new Scanner(System.in);
 
 	public static void main(String args[]) {
-		keyboard = new Scanner(System.in);
 
-		System.out.println("Nome: ");
-		String userName = keyboard.nextLine();
-		
-		System.out.println("Age: ");
-		int userAge = Integer.parseInt(keyboard.nextLine());
-		
-		Person person = new Person(userAge, userName);
-		
-		while(true) {
-			System.out.println(person.getName() + " please type the direction wanted (r, l, u, d) or any other letter to quit the program: ");
-			String input = keyboard.nextLine();
-			char direction = input.charAt(0);
-			
-			switch (direction) {
-			case 'r':
-				person.andar(Directions.RIGHT);
-				break;
-			case 'l':
-				person.andar(Directions.LEFT);
-				break;
-			case 'u':
-				person.andar(Directions.UP);
-				break;
-			case 'd':
-				person.andar(Directions.DOWN);
-				break;
+		System.out.println("Specify the parameter to make search: ");
+		String find = keyboard.next();
+		URLConection urlConnection = new URLConection(find);
 
-			default:
-				return;
-			}
+    	try {
+			urlConnection.connect();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
 		}
-		
+    	
+    	String data = urlConnection.getGETMethod();
+    	
+        //int occurencies = countOccurrencies(data, find);
+    	int occurencies = data.toLowerCase().split(find, -1).length - 1;
+
+    	System.out.println(occurencies);
+        
+        return;
 	}
+	
+	/*public static int countOccurrencies(String data, String find) {
+		int occurencies = 0;
+        int index = 0;
+        
+        while(index+find.length() < data.length() ) {
+        	int found = data.indexOf(find, index);
+        	if(found >= 0) {
+        		occurencies++;
+        		index = found + find.length();
+        	}else {
+        		break;
+        	}
+        }
+        
+        return occurencies;
+	}*/
 	
 }
