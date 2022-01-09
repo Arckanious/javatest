@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class URLConection {
-	
 	private String url;
 	private URL obj;
 	private HttpURLConnection con;
@@ -28,7 +27,7 @@ public class URLConection {
 	}
 
 	public String getGETMethod() {
-		String result= "";
+		String result = "";
 		String response = "";
 		
 		try {

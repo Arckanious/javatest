@@ -7,25 +7,34 @@ class Main {
 
 	public static void main(String args[]) {
 
+		metodo();
+	}
+
+	private static void metodo() {
 		System.out.println("Specify the parameter to make search: ");
 		String find = keyboard.next();
 		URLConection urlConnection = new URLConection(find);
 
-    	try {
+		if (metodozinho(urlConnection)) return;
+
+		String data = urlConnection.getGETMethod();
+
+		//int occurencies = countOccurrencies(data, find);
+		int occurencies = data.toLowerCase().split(find, -2).length - 1;
+
+		System.out.println(occurencies);
+
+		return;
+	}
+
+	public static boolean metodozinho(URLConection urlConnection) {
+		try {
 			urlConnection.connect();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return;
+			return true;
 		}
-    	
-    	String data = urlConnection.getGETMethod();
-    	
-        //int occurencies = countOccurrencies(data, find);
-    	int occurencies = data.toLowerCase().split(find, -1).length - 1;
-
-    	System.out.println(occurencies);
-        
-        return;
+		return false;
 	}
 	
 	/*public static int countOccurrencies(String data, String find) {
